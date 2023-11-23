@@ -32,12 +32,15 @@ function track_product_page_view() {
         $product_category = !empty($product_categories) ? $product_categories[0]->name : '';
         $product_price = $product->get_price();
 
+	// Set the product name if SKU is blank
+        $tracked_sku = !empty($product_sku) ? $product_sku : $product_name;
+
         // Push Product View Data to Matomo - Populate parameters dynamically
         echo "
         <script>
             if (typeof _paq !== 'undefined') {
                 _paq.push(['setEcommerceView',
-                    '$product_sku', // (Required) productSKU
+                    '$tracked_sku', // (Required) productSKU
                     '$product_name', // (Optional) productName
                     '$product_category', // (Optional) categoryName
                     $product_price // (Optional) price
